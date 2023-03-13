@@ -30,7 +30,7 @@ namespace ApiCatalogo.Controllers
             }
         }
 
-        [HttpGet("{id:int}")]
+        [HttpGet("{id:int}", Name ="ObterProduto")]
         public ActionResult<Produto> Get(int id)
         {
             var produto = _context.Produtos.FirstOrDefault(p => p.ProdutoId == id);
@@ -44,17 +44,33 @@ namespace ApiCatalogo.Controllers
             }
         }
 
-        [HttpGet("{nome}")]
-        public ActionResult<Produto> Get(string nome)
+        [HttpPost]
+        public ActionResult Post(Produto produto)
         {
-            var produto = _context.Produtos.FirstOrDefault(p => p.Nome == nome);   
-            if(produto != null )
+            if(produto != null)
             {
-                return produto; 
+                _context.Produtos.Add(produto);
+                _context.SaveChanges();
+                return new CreatedAtRouteResult("ObterProduto", new { id = produto.ProdutoId }, produto);
             }
+            else
             {
-                return NotFound("Produto com o nome informado não encontrado!");
+                return BadRequest("Não foi possível cadastrar o produto"); 
             }
+        }
+
+        [HttpPut("{id:int}")]
+        public ActionResult Put(int id, Produto produto)
+        {
+            if(id != produto.ProdutoId)
+            {
+                return BadRequest(); 
+            }
+
+            _context.Entry(produto).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+            _context.SaveChanges();
+
+            return Ok(produto);
         }
     }
 }
