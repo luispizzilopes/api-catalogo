@@ -9,7 +9,7 @@ namespace ApiCatalogo.Controllers
     [ApiController]
     public class ProdutosController : ControllerBase
     {
-        private readonly AppDbContext _context; 
+        private readonly AppDbContext _context;
 
         public ProdutosController(AppDbContext context)
         {
@@ -22,32 +22,32 @@ namespace ApiCatalogo.Controllers
             var produtos = _context.Produtos.ToList();
             if (produtos != null)
             {
-                return produtos; 
+                return produtos;
             }
             else
             {
-                return NotFound("Produtos não encontrados!"); 
+                return NotFound("Produtos não encontrados!");
             }
         }
 
-        [HttpGet("{id:int}", Name ="ObterProduto")]
+        [HttpGet("{id:int}", Name = "ObterProduto")]
         public ActionResult<Produto> Get(int id)
         {
             var produto = _context.Produtos.FirstOrDefault(p => p.ProdutoId == id);
-            if(produto != null)
+            if (produto != null)
             {
                 return produto;
             }
             else
             {
-                return NotFound("Produto com o id informado não encontrado!"); 
+                return NotFound("Produto com o id informado não encontrado!");
             }
         }
 
         [HttpPost]
         public ActionResult Post(Produto produto)
         {
-            if(produto != null)
+            if (produto != null)
             {
                 _context.Produtos.Add(produto);
                 _context.SaveChanges();
@@ -55,22 +55,39 @@ namespace ApiCatalogo.Controllers
             }
             else
             {
-                return BadRequest("Não foi possível cadastrar o produto"); 
+                return BadRequest("Não foi possível cadastrar o produto");
             }
         }
 
         [HttpPut("{id:int}")]
         public ActionResult Put(int id, Produto produto)
         {
-            if(id != produto.ProdutoId)
+            if (id != produto.ProdutoId)
             {
-                return BadRequest(); 
+                return BadRequest();
             }
 
             _context.Entry(produto).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
             _context.SaveChanges();
 
             return Ok(produto);
+        }
+
+        [HttpDelete("{id:int}")]
+        public ActionResult Delete(int id)
+        {
+            var produto = _context.Produtos.FirstOrDefault(p => p.ProdutoId == id); 
+
+            if (produto != null)
+            {
+                _context.Produtos.Remove(produto);
+                _context.SaveChanges();
+                return Ok();
+            }
+            else
+            {
+                return NotFound("Produto não localizado!");
+            }
         }
     }
 }
