@@ -1,4 +1,5 @@
 using ApiCatalogo.Context;
+using ApiCatalogo.Filters;
 using Microsoft.EntityFrameworkCore;
 using System.Text.Json.Serialization;
 
@@ -11,6 +12,7 @@ namespace ApiCatalogo
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
+            builder.Services.AddScoped<ApiLogginFilter>(); 
             builder.Services.AddControllers().AddJsonOptions(options =>
                 options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles); 
             builder.Services.AddControllers();

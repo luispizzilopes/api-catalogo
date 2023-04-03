@@ -1,4 +1,5 @@
 ﻿using ApiCatalogo.Context;
+using ApiCatalogo.Filters;
 using ApiCatalogo.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -17,6 +18,7 @@ namespace ApiCatalogo.Controllers
         }
 
         [HttpGet]
+        [ServiceFilter(typeof(ApiLogginFilter))]
         public ActionResult<IEnumerable<Produto>> Get()
         {
             var produtos = _context.Produtos.ToList();
