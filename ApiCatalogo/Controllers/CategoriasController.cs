@@ -19,11 +19,11 @@ namespace ApiCatalogo.Controllers
         }
 
         [HttpGet("produtos")]
-        public ActionResult<IEnumerable<Categoria>> GetCategoriasProdutos()
+        public async Task<ActionResult<IEnumerable<Categoria>>> GetCategoriasProdutosAsync()
         {
             try
             {
-                return _context.Categorias.Include(p => p.Produtos).ToList();
+                return await _context.Categorias.Include(p => p.Produtos).ToListAsync();
             }
             catch (Exception)
             {

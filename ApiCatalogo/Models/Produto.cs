@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using ApiCatalogo.Validation;
+using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Reflection.Metadata.Ecma335;
@@ -14,6 +15,7 @@ namespace ApiCatalogo.Models
 
         [Required]
         [StringLength(80)]
+        [PrimeiraLetraMaiuscula]
         public string? Nome { get; set; }
 
         [Required]
