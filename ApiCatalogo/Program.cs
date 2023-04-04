@@ -1,5 +1,6 @@
 using ApiCatalogo.Context;
 using ApiCatalogo.Filters;
+using ApiCatalogo.Repository.UnitOfWork;
 using Microsoft.EntityFrameworkCore;
 using System.Text.Json.Serialization;
 
@@ -12,11 +13,19 @@ namespace ApiCatalogo
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
+            //Adicionando o serviço do Unit of Work 
+            builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+
+            //Adicionando o serviço do Filtro personalizado
             builder.Services.AddScoped<ApiLogginFilter>(); 
+
             builder.Services.AddControllers().AddJsonOptions(options =>
                 options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles); 
+
             builder.Services.AddControllers();
+
             builder.Services.AddEndpointsApiExplorer();
+
             builder.Services.AddSwaggerGen();
 
             //Inclusão do serviço do contexto do EF
