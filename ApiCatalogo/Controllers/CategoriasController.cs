@@ -1,9 +1,11 @@
 ﻿using ApiCatalogo.Context;
 using ApiCatalogo.Models;
+using ApiCatalogo.Repository.UnitOfWork;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
+using System.Runtime.Versioning;
 
 namespace ApiCatalogo.Controllers
 {
@@ -11,19 +13,19 @@ namespace ApiCatalogo.Controllers
     [ApiController]
     public class CategoriasController : ControllerBase
     {
-        private readonly AppDbContext _context;
+        private readonly IUnitOfWork _uof; 
 
-        public CategoriasController(AppDbContext context)
+        public CategoriasController(IUnitOfWork uof)
         {
-            _context = context;
+            _uof = uof; 
         }
 
         [HttpGet("produtos")]
-        public ActionResult<IEnumerable<Categoria>> GetCategoriasProdutosAsync()
+        public ActionResult<IEnumerable<Categoria>> GetCategoriasProdutos()
         {
             try
             {
-                return _context.Categorias.Include(p => p.Produtos).ToList();
+                return Ok(_uof.CategoriaRepository.GetCategoriasProdutos().ToList());
             }
             catch (Exception)
             {
@@ -37,7 +39,7 @@ namespace ApiCatalogo.Controllers
         {
             try
             {
-                return _context.Categorias.AsNoTracking().ToList();
+                return _uof.CategoriaRepository.Get().ToList();
             }
             catch (Exception)
             {
@@ -50,7 +52,7 @@ namespace ApiCatalogo.Controllers
         {
             try
             {
-                var categoria = _context.Categorias.SingleOrDefault(c => c.CategoriaId == id);
+                var categoria = _uof.CategoriaRepository.GetById(c => c.CategoriaId == id);
 
                 if (categoria is null)
                 {
@@ -75,8 +77,8 @@ namespace ApiCatalogo.Controllers
                     return BadRequest();
                 }
 
-                _context.Categorias.Add(categoria);
-                _context.SaveChanges();
+                _uof.CategoriaRepository.Add(categoria);
+                _uof.Commit();
 
                 return Ok();
             }
@@ -96,8 +98,8 @@ namespace ApiCatalogo.Controllers
                     return BadRequest();
                 }
 
-                _context.Entry(categoria).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
-                _context.SaveChanges();
+                _uof.CategoriaRepository.Update(categoria);
+                _uof.Commit(); 
 
                 return Ok(categoria);
             }
@@ -112,15 +114,15 @@ namespace ApiCatalogo.Controllers
         {
             try
             {
-                var categoria = _context.Categorias.FirstOrDefault(c => c.CategoriaId == id);
+                var categoria = _uof.CategoriaRepository.GetById(c => c.CategoriaId == id);
 
                 if (categoria is null)
                 {
                     return NotFound();
                 }
 
-                _context.Remove(categoria);
-                _context.SaveChanges();
+                _uof.CategoriaRepository.Delete(categoria);
+                _uof.Commit();
 
                 return Ok();
             }
