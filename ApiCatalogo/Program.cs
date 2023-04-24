@@ -3,6 +3,7 @@ using ApiCatalogo.DTOs.Mappings;
 using ApiCatalogo.Filters;
 using ApiCatalogo.Repository.UnitOfWork;
 using AutoMapper;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System.Text.Json.Serialization;
 
@@ -45,7 +46,12 @@ namespace ApiCatalogo
             string mySqlConnetion = builder.Configuration.GetConnectionString("DefaultConnetion");
             //Registro do contexto da EF
             builder.Services.AddDbContext<AppDbContext>(options =>
-              options.UseMySql(mySqlConnetion, ServerVersion.AutoDetect(mySqlConnetion))); 
+              options.UseMySql(mySqlConnetion, ServerVersion.AutoDetect(mySqlConnetion)));
+
+            //Adicionando o serviço de Identity
+            builder.Services.AddIdentity<IdentityUser, IdentityRole>()
+                .AddEntityFrameworkStores<AppDbContext>()
+                .AddDefaultTokenProviders();
 
             var app = builder.Build();
 
@@ -57,6 +63,8 @@ namespace ApiCatalogo
             }
 
             app.UseHttpsRedirection();
+
+            app.UseAuthentication();
 
             app.UseAuthorization();
 
