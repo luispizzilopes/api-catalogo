@@ -6,6 +6,6 @@ namespace ApiCatalogo.Repository.UnitOfWork
     {
         IProdutoRepository ProdutoRepository { get; }
         ICategoriaRepository CategoriaRepository { get; }
-        void Commit(); 
+        Task Commit(); 
     }
 }
