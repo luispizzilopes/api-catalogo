@@ -1,6 +1,8 @@
 using ApiCatalogo.Context;
+using ApiCatalogo.DTOs.Mappings;
 using ApiCatalogo.Filters;
 using ApiCatalogo.Repository.UnitOfWork;
+using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using System.Text.Json.Serialization;
 
@@ -17,7 +19,17 @@ namespace ApiCatalogo
             builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
             //Adicionando o serviço do Filtro personalizado
-            builder.Services.AddScoped<ApiLogginFilter>(); 
+            builder.Services.AddScoped<ApiLogginFilter>();
+
+            //Adicionando o serviço do AutoMapper
+            var mappingConfig = new MapperConfiguration(mp =>
+            {
+                mp.AddProfile(new MappingProfile()); 
+            });
+
+            IMapper mapper = mappingConfig.CreateMapper();
+            builder.Services.AddSingleton(mapper);
+
 
             builder.Services.AddControllers().AddJsonOptions(options =>
                 options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles); 
