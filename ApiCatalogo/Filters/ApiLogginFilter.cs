@@ -20,4 +20,5 @@ namespace ApiCatalogo.Filters
             _logger.LogInformation("Executando -> OnActionExecuted"); 
         }
     }
+
 }
