@@ -48,3 +48,11 @@ C:\Users\PC\source\repos\ApiCatalogo\ApiCatalogo\bin\Debug\net6.0\Microsoft.Exte
 C:\Users\PC\source\repos\ApiCatalogo\ApiCatalogo\bin\Debug\net6.0\Microsoft.Extensions.Identity.Core.dll
 C:\Users\PC\source\repos\ApiCatalogo\ApiCatalogo\bin\Debug\net6.0\Microsoft.Extensions.Identity.Stores.dll
 C:\Users\PC\source\repos\ApiCatalogo\ApiCatalogo\bin\Debug\net6.0\System.Diagnostics.DiagnosticSource.dll
+C:\Users\PC\source\repos\ApiCatalogo\ApiCatalogo\bin\Debug\net6.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+C:\Users\PC\source\repos\ApiCatalogo\ApiCatalogo\bin\Debug\net6.0\Microsoft.IdentityModel.Abstractions.dll
+C:\Users\PC\source\repos\ApiCatalogo\ApiCatalogo\bin\Debug\net6.0\Microsoft.IdentityModel.JsonWebTokens.dll
+C:\Users\PC\source\repos\ApiCatalogo\ApiCatalogo\bin\Debug\net6.0\Microsoft.IdentityModel.Logging.dll
+C:\Users\PC\source\repos\ApiCatalogo\ApiCatalogo\bin\Debug\net6.0\Microsoft.IdentityModel.Protocols.dll
+C:\Users\PC\source\repos\ApiCatalogo\ApiCatalogo\bin\Debug\net6.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+C:\Users\PC\source\repos\ApiCatalogo\ApiCatalogo\bin\Debug\net6.0\Microsoft.IdentityModel.Tokens.dll
+C:\Users\PC\source\repos\ApiCatalogo\ApiCatalogo\bin\Debug\net6.0\System.IdentityModel.Tokens.Jwt.dll
