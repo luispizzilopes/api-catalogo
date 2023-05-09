@@ -104,7 +104,10 @@ namespace ApiCatalogo
                     ValidateIssuerSigningKey = true,
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(
                         builder.Configuration["Jwt:key"]))
-                }); 
+                });
+
+            //CORS
+            builder.Services.AddCors(); 
 
             var app = builder.Build();
 
@@ -114,6 +117,14 @@ namespace ApiCatalogo
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
+
+            //Configurando o CORS
+            app.UseCors(c =>
+            {
+                c.AllowAnyMethod();
+                c.AllowAnyOrigin();
+                c.AllowAnyHeader();
+            }); 
 
             app.UseHttpsRedirection();
 

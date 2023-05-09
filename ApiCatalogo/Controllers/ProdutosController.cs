@@ -4,12 +4,14 @@ using ApiCatalogo.Filters;
 using ApiCatalogo.Models;
 using ApiCatalogo.Repository.UnitOfWork;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace ApiCatalogo.Controllers
 {
+    [Authorize(AuthenticationSchemes = "Bearer")]
     [Route("[controller]")]
     [ApiController]
     public class ProdutosController : ControllerBase
